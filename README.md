@@ -13,3 +13,9 @@ Pre-requisites:
 
 ---
 
+
+Run with Docker:
+```
+docker build . -t consumer-py
+docker run -p5000:5000 consumer-py
+```
