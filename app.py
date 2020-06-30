@@ -8,9 +8,9 @@ PROVIDER_URL = 'https://provider-go.herokuapp.com/'
 
 
 @app.route('/')
-def hello():
+def get_addresses():
     res = get(PROVIDER_URL)
-    return res.content
+    return res.json()
 
 
 port = os.getenv('PORT')
