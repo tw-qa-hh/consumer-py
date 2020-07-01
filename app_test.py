@@ -1,30 +1,64 @@
-import atexit
-import unittest
+import pytest
+import os
+import json
 
-from pactman import Consumer, Provider, EachLike
+import requests
+from pact import Consumer, Provider
 
 from app import get_addresses
 
-pact = Consumer('Consumer').has_pact_with(Provider('Provider'), use_mocking_server=True)
-pact.start_service()
-atexit.register(pact.stop_service)
+CONSUMER_NAME = 'consumer-py'
+PROVIDER_NAME = 'provider-go'
+
+PACT_DIR = '{}/pacts'.format(os.getcwd())
+
+PACT_BROKER_URL = 'https://qa-ham-pact-broker.herokuapp.com'
+
+PACT_UPLOAD_URL = '{}{}/{}'.format(PACT_BROKER_URL, '/pacts/provider/provider-go/consumer', CONSUMER_NAME)
+
+PACT_FILE = '{}-{}.json'.format(CONSUMER_NAME, PROVIDER_NAME)
 
 
-class GetAddresses(unittest.TestCase):
-    def test_get_addresses(self):
-        expected = {'ID': '',  'Zip': '', 'Street': ''}
+@pytest.fixture(scope='session')
+def pact(request):
+    print('PACT_DIR', PACT_DIR)
+    pact = Consumer(CONSUMER_NAME).has_pact_with(Provider(PROVIDER_NAME), pact_dir=PACT_DIR)
+    try:
+        pact.start_service()
+        yield pact
+    finally:
+        pact.stop_service()
 
-        (pact
-         .given('test')
-         .upon_receiving('a request for addresses')
-         .with_request('get', '/')
-         .will_respond_with(200, body=expected))
-
-        with pact:
-            result = get_addresses()
-
-        self.assertEqual(expected, result[0])
+    if not request.node.testsfailed:
+        push_to_broker('1.0.0')
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_get_addresses(pact):
+    expected = {'ID': '', 'Zip': '', 'Street': ''}
+
+    (pact
+     .given('test')
+     .upon_receiving('a request for addresses')
+     .with_request('get', '/')
+     .will_respond_with(200, body=expected))
+
+    with pact:
+        result = get_addresses(pact.uri)
+        assert expected == json.loads(result)
+
+    # pact.verify()
+
+
+def push_to_broker(version):
+    """
+    Push to broker
+    """
+    with open(os.path.join(PACT_DIR, PACT_FILE), 'rb') as pact_file:
+        pact_file_json = json.load(pact_file)
+
+    r = requests.put(
+        "{}/version/{}".format(PACT_UPLOAD_URL, version),
+        json=pact_file_json
+    )
+    if not r.ok:
+        r.raise_for_status()
