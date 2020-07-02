@@ -22,7 +22,8 @@ PACT_FILE = '{}-{}.json'.format(CONSUMER_NAME, PROVIDER_NAME)
 @pytest.fixture(scope='session')
 def pact(request):
     print('PACT_DIR', PACT_DIR)
-    pact = Consumer(CONSUMER_NAME).has_pact_with(Provider(PROVIDER_NAME), pact_dir=PACT_DIR)
+    pact = Consumer(CONSUMER_NAME, tags=['consumer-py']) \
+        .has_pact_with(Provider(PROVIDER_NAME), pact_dir=PACT_DIR)
     try:
         pact.start_service()
         yield pact
@@ -30,11 +31,11 @@ def pact(request):
         pact.stop_service()
 
     if not request.node.testsfailed:
-        push_to_broker('1.0.0')
+        push_to_broker('1.0.1')
 
 
 def test_get_addresses(pact):
-    expected = {'ID': '', 'Zip': '', 'Street': ''}
+    expected = {'ID': 'py', 'Zip': '000', 'Street': ''}
 
     (pact
      .given('test')
@@ -46,7 +47,7 @@ def test_get_addresses(pact):
         result = get_addresses(pact.uri)
         assert expected == json.loads(result)
 
-    # pact.verify()
+    pact.verify()
 
 
 def push_to_broker(version):
