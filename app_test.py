@@ -22,7 +22,7 @@ PACT_FILE = '{}-{}.json'.format(CONSUMER_NAME, PROVIDER_NAME)
 @pytest.fixture(scope='session')
 def pact(request):
     print('PACT_DIR', PACT_DIR)
-    pact = Consumer(CONSUMER_NAME, tags=['consumer-py']) \
+    pact = Consumer(CONSUMER_NAME, tag_with_git_branch=True) \
         .has_pact_with(Provider(PROVIDER_NAME), pact_dir=PACT_DIR)
     try:
         pact.start_service()
@@ -31,7 +31,7 @@ def pact(request):
         pact.stop_service()
 
     if not request.node.testsfailed:
-        push_to_broker('1.0.1')
+        push_to_broker('1.0.6', 'master')
 
 
 def test_get_addresses(pact):
@@ -50,7 +50,7 @@ def test_get_addresses(pact):
     pact.verify()
 
 
-def push_to_broker(version):
+def push_to_broker(version, tag):
     """
     Push to broker
     """
@@ -61,5 +61,13 @@ def push_to_broker(version):
         "{}/version/{}".format(PACT_UPLOAD_URL, version),
         json=pact_file_json
     )
+
     if not r.ok:
         r.raise_for_status()
+
+    r_t = requests.put("{}/pacticipants/{}/versions/{}/tags/{}"
+                       .format(PACT_BROKER_URL, CONSUMER_NAME, version, tag),
+                       json={})
+
+    if not r_t.ok:
+        r_t.raise_for_status()
