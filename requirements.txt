@@ -21,7 +21,7 @@ pact-python==1.1.0
 pipenv==2018.11.26
 pluggy==0.13.1
 psutil==5.7.0
-py==1.9.0
+py==1.10.0
 pycparser==2.20
 pyparsing==2.4.7
 pytest==5.4.3
