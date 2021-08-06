@@ -20,7 +20,7 @@ packaging==21.0
 pact-python==1.3.9
 pipenv==2021.5.29
 pluggy==0.13.1
-psutil==5.7.0
+psutil==5.8.0
 py==1.10.0
 pycparser==2.20
 pyparsing==2.4.7
