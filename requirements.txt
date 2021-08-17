@@ -31,7 +31,7 @@ semver==2.13.0
 six==1.16.0
 Unidecode==1.2.0
 uritemplate==3.0.1
-urllib3==1.26.5
+urllib3==1.26.6
 virtualenv==20.7.2
 virtualenv-clone==0.5.6
 wcwidth==0.2.5
