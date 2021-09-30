@@ -6,7 +6,7 @@ cffi==1.14.6
 chardet==4.0.0
 click==8.0.1
 colorama==0.4.4
-cryptography==3.4.8
+cryptography==35.0.0
 distlib==0.3.2
 filelock==3.0.12
 Flask==2.0.1
