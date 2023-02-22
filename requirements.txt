@@ -14,7 +14,7 @@ idna==3.2
 ipaddress==1.0.23
 itsdangerous==2.0.1
 Jinja2==3.0.1
-MarkupSafe==2.0.1
+MarkupSafe==2.1.2
 more-itertools==8.9.0
 packaging==21.0
 pact-python==1.4.3
