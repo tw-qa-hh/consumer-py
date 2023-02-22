@@ -24,7 +24,7 @@ psutil==5.8.0
 py==1.10.0
 pycparser==2.20
 pyparsing==2.4.7
-pytest==6.2.5
+pytest==7.2.1
 requests==2.26.0
 restnavigator==1.0.1
 semver==2.13.0
