@@ -9,7 +9,7 @@ colorama==0.4.6
 cryptography==44.0.3
 distlib==0.3.6
 filelock==3.18.0
-Flask==2.3.2
+Flask==2.3.3
 idna==3.7
 ipaddress==1.0.23
 itsdangerous==2.1.2
