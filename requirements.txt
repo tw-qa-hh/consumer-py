@@ -7,7 +7,7 @@ chardet==5.1.0
 click==8.2.1
 colorama==0.4.6
 cryptography==44.0.3
-distlib==0.3.6
+distlib==0.3.9
 filelock==3.18.0
 Flask==2.3.3
 idna==3.7
