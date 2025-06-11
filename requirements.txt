@@ -34,5 +34,5 @@ uritemplate==4.1.1
 urllib3==2.2.2
 virtualenv==20.26.6
 virtualenv-clone==0.5.7
-wcwidth==0.2.6
+wcwidth==0.2.13
 Werkzeug==3.0.6
