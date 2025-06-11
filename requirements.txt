@@ -10,7 +10,7 @@ cryptography==44.0.1
 distlib==0.3.6
 filelock==3.12.0
 Flask==2.3.2
-idna==3.4
+idna==3.7
 ipaddress==1.0.23
 itsdangerous==2.1.2
 Jinja2==3.1.6
