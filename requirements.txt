@@ -23,7 +23,7 @@ pluggy==1.6.0
 psutil==5.9.8
 py==1.11.0
 pycparser==2.22
-pyparsing==3.0.9
+pyparsing==3.2.3
 pytest==7.4.4
 requests==2.32.4
 restnavigator==1.0.1
