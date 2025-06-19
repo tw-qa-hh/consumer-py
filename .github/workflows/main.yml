@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.8]
@@ -27,7 +27,7 @@ jobs:
         run: pytest
 
   build_and_push:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Login to Heroku Container registry
@@ -40,7 +40,7 @@ jobs:
         run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web
 
   release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: build_and_push
     steps:
       - name: Release
