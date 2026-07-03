@@ -22,7 +22,7 @@ pipenv==2026.6.2
 pluggy==1.6.0
 psutil==7.2.2
 py==1.11.0
-pycparser==2.23
+pycparser==3.0
 pyparsing==3.3.2
 pytest==9.1.1
 requests==2.34.2
