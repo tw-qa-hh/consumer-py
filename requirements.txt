@@ -27,7 +27,7 @@ pyparsing==3.3.2
 pytest==9.1.1
 requests==2.34.2
 restnavigator==1.0.1
-semver==3.0.4
+semver==3.1.0
 six==1.17.0
 Unidecode==1.4.0
 uritemplate==4.2.0
